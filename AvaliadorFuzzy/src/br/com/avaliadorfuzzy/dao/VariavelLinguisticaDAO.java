@@ -15,7 +15,7 @@ public class VariavelLinguisticaDAO extends GenericDAO {
 	public ArrayList<VariavelLinguistica> findTermos() {
 		em = createEntityManager();
 
-		Query q = em.createQuery("SELECT Object(t) FROM Termo as t");
+		Query q = em.createQuery("SELECT Object(vl) FROM VariavelLinguistica as vl");
 
 		if (q.getResultList().size() > 0) {
 			return (ArrayList<VariavelLinguistica>) q.getResultList();

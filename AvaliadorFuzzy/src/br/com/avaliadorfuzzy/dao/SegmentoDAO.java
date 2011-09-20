@@ -17,7 +17,7 @@ public class SegmentoDAO extends GenericDAO {
 	{
 		em = createEntityManager();
 		
-		Query q = em.createQuery("SELECT Object(t) FROM Termo as t");
+		Query q = em.createQuery("SELECT Object(s) FROM Segmento as s");
 		
 		if(q.getResultList().size() > 0){
 			return (ArrayList<Segmento>) q.getResultList();
