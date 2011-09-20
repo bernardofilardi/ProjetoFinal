@@ -18,7 +18,7 @@ public class RegraDAO extends GenericDAO {
 		{
 			return (ArrayList<Regra>) q.getResultList();
 		} else {
-			return null;
+			return new ArrayList<Regra>();
 		}
 		
 	}

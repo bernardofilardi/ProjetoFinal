@@ -1,52 +1,48 @@
 package br.com.avaliadorfuzzy.controller;
 
-import javax.swing.JOptionPane;
-
 import br.com.avaliadorfuzzy.dao.RegraDAO;
 import br.com.avaliadorfuzzy.model.Regra;
 import br.com.avaliadorfuzzy.model.Segmento;
 import br.com.avaliadorfuzzy.model.Termo;
-import br.com.avaliadorfuzzy.model.TipoVariavelLinguistica;
 
 public class FuzzyController {
 	
-	private RegraDAO rulDAO;
-	private double Alfa;
+	private RegraDAO regraDAO;
+	private double AlfaTempo;
+	private double AlfaConforto;
 	private double Menor_alfa;
 	private double denominadorRegra = 0;
 	private double numeradorRegra = 0;
 	private double ValorFinal = 0;
 	
-	private double getFuzzyClassification(int fatorTempo, int fatorConforto) {
+	public double getFuzzyClassification(int fatorTempo, int fatorConforto) {
 
 		double centroidRegra = 0;
 		double numeradorGeral = 0;
 		double denominadorGeral = 0;
 
-		if (rulDAO == null)
-			loadFuzzyRegras();
+		if (regraDAO == null)
+			regraDAO = new RegraDAO();
 
 		try {
 
 			// Iterando nas regras
 
-			for (Regra rul : rulDAO.findRegras()) {
+			for (Regra rul : regraDAO.findRegras()) {
 
 				centroidRegra = 0;
 				denominadorRegra = 0;
 				Menor_alfa = 1;
 
 				// Transformando valores escalares em fuzzy e realizando a inferência
-				for (Termo termo : rul.getTermosAntecedentes()) {
 
-					if (termo.getVariavelLinguistica().getTipoVariavel().equals(TipoVariavelLinguistica.tempo))
-						Alfa = avaliaMI(termo, fatorTempo);
-					else if (termo.getVariavelLinguistica().getTipoVariavel().equals(TipoVariavelLinguistica.condicaoConforto))
-						Alfa = avaliaMI(termo, fatorConforto);
-
-					if (Alfa < Menor_alfa)
-						Menor_alfa = Alfa;
-				}
+				AlfaTempo = avaliaMI(rul.getTermoByIdTermoTempo(), fatorTempo);
+				if (AlfaTempo < Menor_alfa)
+					Menor_alfa = AlfaTempo;
+				
+				AlfaConforto = avaliaMI(rul.getTermoByIdTermoConforto(), fatorConforto);
+				if (AlfaConforto < Menor_alfa)
+					Menor_alfa = AlfaConforto;
 
 				// _______rebaixa termo de saída a altura do menor valor e
 				// calcula centróide da
@@ -58,7 +54,7 @@ public class FuzzyController {
 
 					// ________calcula centroide da regra e soma ao numerador
 					// geral__
-					centroidRegra = calculateCentroid(rul.getTermoConsequente());
+					centroidRegra = calculateCentroid(rul.getTermoByIdTermoAvaliacao());
 
 					// somando o centroide da regra ao somatorio de centroides
 					numeradorGeral += (centroidRegra * denominadorRegra);
@@ -69,7 +65,7 @@ public class FuzzyController {
 			}
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.getMessage();
 		}
 
 		// setando a classificação : pega o somatorio de centroides * area e
@@ -77,11 +73,6 @@ public class FuzzyController {
 		ValorFinal = numeradorGeral / denominadorGeral;
 
 		return (double) ValorFinal;
-	}
-
-	private void loadFuzzyRegras() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	// Método que realiza a transformação dos valores escalares em valores fuzzy
@@ -112,13 +103,8 @@ public class FuzzyController {
 				// M*x+Q)_____________________________
 				pertinence = (coefAngular * valueFactor) + coefLinear;
 			}
-			// ctlMain.sendDebugMessage("VariÃ¡vel = " +
-			// term.getLinguisticVariable().getName() + "-> Termo = " +
-			// term.getName() + "-> Valor = " + valueFactor + "->Pertinencia = "
-			// + pertinence);
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null,
-					"Erro na funçãoo avaliaMI\n Detalhes : " + ex.getMessage());
+		} catch (Exception e) {
+			e.getMessage();
 		}
 
 		return pertinence;
@@ -190,11 +176,8 @@ public class FuzzyController {
 
 			CentroideRegra = numeradorRegra / denominadorRegra;
 
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(
-					null,
-					"Erro na funÃ§Ã£o calculateCentroid\n Detalhes : "
-							+ ex.getMessage());
+		} catch (Exception e) {
+			e.getMessage();
 		}
 
 		return CentroideRegra;
