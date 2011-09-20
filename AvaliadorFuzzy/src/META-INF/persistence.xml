@@ -5,7 +5,7 @@
     <class>br.com.avaliadorfuzzy.model.Termo</class>
     <class>br.com.avaliadorfuzzy.model.Segmento</class>
     <class>br.com.avaliadorfuzzy.model.Regra</class>
-    <class>br.com.avaliadorfuzzy.model.Variavellinguistica</class>
+    <class>br.com.avaliadorfuzzy.model.VariavelLinguistica</class>
     <properties>
       <property name="hibernate.connection.username" value="root"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

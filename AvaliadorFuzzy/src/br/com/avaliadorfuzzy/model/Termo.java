@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class Termo implements java.io.Serializable {
 
 	private int idTermo;
-	private Variavellinguistica variavellinguistica;
+	private VariavelLinguistica variavellinguistica;
 	private String nome;
 	private Set<Regra> regrasForIdTermoTempo = new HashSet<Regra>(0);
 	private Set<Regra> regrasForIdTermoConforto = new HashSet<Regra>(0);
@@ -31,14 +31,14 @@ public class Termo implements java.io.Serializable {
 	public Termo() {
 	}
 
-	public Termo(int idTermo, Variavellinguistica variavellinguistica,
+	public Termo(int idTermo, VariavelLinguistica variavellinguistica,
 			String nome) {
 		this.idTermo = idTermo;
 		this.variavellinguistica = variavellinguistica;
 		this.nome = nome;
 	}
 
-	public Termo(int idTermo, Variavellinguistica variavellinguistica,
+	public Termo(int idTermo, VariavelLinguistica variavellinguistica,
 			String nome, Set<Regra> regrasForIdTermoTempo,
 			Set<Regra> regrasForIdTermoConforto,
 			Set<Regra> regrasForIdTermoAvaliacao, Set<Segmento> segmentos) {
@@ -63,11 +63,11 @@ public class Termo implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idVariavelLinguistica", nullable = false)
-	public Variavellinguistica getVariavellinguistica() {
+	public VariavelLinguistica getVariavellinguistica() {
 		return this.variavellinguistica;
 	}
 
-	public void setVariavellinguistica(Variavellinguistica variavellinguistica) {
+	public void setVariavellinguistica(VariavelLinguistica variavellinguistica) {
 		this.variavellinguistica = variavellinguistica;
 	}
 
