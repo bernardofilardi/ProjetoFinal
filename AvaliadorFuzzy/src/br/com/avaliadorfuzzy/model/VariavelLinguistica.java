@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "variavellinguistica", catalog = "avaliadorfuzzydb")
-public class Variavellinguistica implements java.io.Serializable {
+public class VariavelLinguistica implements java.io.Serializable {
 
 	/**
 	 * 
@@ -28,14 +28,14 @@ public class Variavellinguistica implements java.io.Serializable {
 	private Long fimUniversoDiscursso;
 	private Set<Termo> termos = new HashSet<Termo>(0);
 
-	public Variavellinguistica() {
+	public VariavelLinguistica() {
 	}
 
-	public Variavellinguistica(int idVariavelLinguistica) {
+	public VariavelLinguistica(int idVariavelLinguistica) {
 		this.idVariavelLinguistica = idVariavelLinguistica;
 	}
 
-	public Variavellinguistica(int idVariavelLinguistica, String nome,
+	public VariavelLinguistica(int idVariavelLinguistica, String nome,
 			Long inicioUniversoDiscursso, Long fimUniversoDiscursso,
 			Set<Termo> termos) {
 		this.idVariavelLinguistica = idVariavelLinguistica;
